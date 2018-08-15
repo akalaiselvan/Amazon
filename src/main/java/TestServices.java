@@ -14,11 +14,19 @@ public class TestServices {
 
     TestUtils utils=new TestUtils();
 
+    public TestServices() throws IOException, BiffException {
+    }
 
 
     public static WebElement findElementbyName(String ByName) {
         By Name = By.name(ByName);
         WebElement webElement = driver.findElement(Name);
+        return webElement;
+    }
+
+    public static WebElement findElementbyCSSselector(String ByCSS) {
+        By CSS = By.cssSelector(ByCSS);
+        WebElement webElement = driver.findElement(CSS);
         return webElement;
     }
 

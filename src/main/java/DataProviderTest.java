@@ -13,6 +13,9 @@ public class DataProviderTest {
     Selenium selenium=new Selenium();
     TestUtils utils=new TestUtils();
 
+    public DataProviderTest() throws IOException, BiffException {
+    }
+
     @DataProvider(name = "login")
     public Object[][] testcredential() throws Exception {
     return TestHelper.getfromExcel(utils.SHEET_LOCATIO,utils.sheetname);

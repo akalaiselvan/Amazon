@@ -1,0 +1,17 @@
+first need to get parent id
+and get list of childs which that parent have
+find the desired result and find link text for that result
+click that link text
+
+
+
+#s-results-list-atf
+#title_feature_div
+
+needed in report
+
+1.Book name & Edition
+2.Author(s)
+3.price with edition
+4.hardcopy or kindle
+5.

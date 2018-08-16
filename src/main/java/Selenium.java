@@ -44,7 +44,7 @@ public class Selenium {
 //    }
 
 
-//    @BeforeTest
+    //@BeforeTest
     public void gotoLink() throws InterruptedException {
         TestServices.getThisLink(TestUtils.getSITELINK());
         TestServices.waitinSeconds(2);
@@ -74,7 +74,7 @@ public class Selenium {
     return gettit;
     }
 
-  //  @Test(priority = 3)
+    //@Test(priority = 3)
     public void getIntoResult() throws InterruptedException, IOException {
         WebElement getres=TestServices.findElementbyCSSselector("#"+getResultsinList().get(Integer.parseInt(TestUtils.resultToShow())));
         WebElement tagname=getres.findElement(By.tagName("a"));
@@ -83,7 +83,7 @@ public class Selenium {
     }
 
 
-//    @Test(priority = 4)
+    //@Test(priority = 4)
     public void getTitleandEdition() {
         List<String> getTitle = new ArrayList<String>();
         WebElement getTitles = TestServices.findElementbyCSSselector("#title");
@@ -91,33 +91,30 @@ public class Selenium {
         int n = 0;
         for (WebElement webElement : fetres) {
             getTitle.add(webElement.getAttribute("id"));
-            WebElement s = TestServices.findElementbyCSSselector("#" + getTitle.get(n));
-            String text = s.getText();
-            System.out.println(text);
+            WebElement s; try {
+                s = TestServices.findElementbyCSSselector("#" + getTitle.get(n));
+                String text = s.getText();
+                System.out.println(text);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             n++;
         }
     }
-
     @Test
     public void getAuthorName(){
-        TestServices.getThisLink("https://www.amazon.com/Data-Analytics-Playbook-Governed-Analytic/dp/0128023074/ref=sr_1_1?s=books&ie=UTF8&qid=1534350673&sr=1-1&keywords=data+catalog&dpID=51O9VAn0kTL&preST=_SX218_BO1,204,203,200_QL40_&dpSrc=srch");
+        TestServices.getThisLink("https://www.amazon.com/catalog-science-applications-flight-missions/dp/1722981881/ref=sr_1_2?s=books&ie=UTF8&qid=1534392831&sr=1-2&keywords=data+catalog&dpID=41PFrwqJ7pL&preST=_SX218_BO1,204,203,200_QL40_&dpSrc=srch");
         List<String> getAuthor=new ArrayList<String>();
         WebElement getTitles = TestServices.findElementbyCSSselector("#bylineInfo");
-        List<WebElement> getSpan = getTitles.findElements(By.tagName("span"));
-        System.out.println(getSpan.get(1).getText());
-        int n=0;
+        List<WebElement> getSpan = getTitles.findElements(By.tagName("a"));
         for (WebElement webElement : getSpan) {
-            List<WebElement> getclass=webElement.findElements(By.tagName("span"));
-            for (WebElement webElement1 : getclass) {
-                String s =webElement1.getAttribute("class");
-                if (s.contains("Name")){
-                    getAuthor.add(s);
-                }
-            }              n++;
+              String s = webElement.getText();
+              if (!s.equals("")){
+                  getAuthor.add(s);
+              }
         }
         System.out.println(getAuthor);
     }
-
 //    span.author:nth-child(1)
 //    span.author:nth-child(2)
 //    span.author:nth-child(3)

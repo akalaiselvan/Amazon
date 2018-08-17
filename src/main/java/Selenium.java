@@ -24,6 +24,7 @@ public class Selenium {
         TestServices.waitinSeconds(2);
     }
 
+
     /*First it will select the mentioned category
      * Then type the item name which need to be searhed
      * Clicks search button
@@ -31,6 +32,13 @@ public class Selenium {
 
     @Test(priority = 1)
     public void searchItem() throws InterruptedException {
+        /* Since we are getting all inputs in excel its mandatory that it shouldn't be empty at any cause*/
+        /* To nake sure this each cell has been verified for data using ASSERTION*/
+        /* In this method we used Hard assert, if we would have used soft assert then it just skipped the exception*/
+        /* To make sure Every cell for data , We using HARD assertion here , so if any fail Test will be terminnated*/
+        TestUtils.checkIfAnyEmpty();
+
+
         TestServices.waitinSeconds(05);
         WebElement searchDropdownBox = TestServices.findElementbyCSSselector(TestUtils.getGetDropdownPath());
         Select dropdown = new Select(searchDropdownBox);    // Select category from dropdown

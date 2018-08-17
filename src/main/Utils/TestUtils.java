@@ -51,6 +51,7 @@ public class TestUtils {
     private static String EDITION_PRICE="#mediaTabs_tabSet";
     private static String EDITION_PRICE_METHOD2="#tmmSwatches";
 
+    private static String CUSTOMER_REVIEWID="#acrPopover";
 
 
 
@@ -262,5 +263,13 @@ public class TestUtils {
 
     public static void setEditionPriceMethod2(String editionPriceMethod2) {
         EDITION_PRICE_METHOD2 = editionPriceMethod2;
+    }
+
+    public static String getCustomerReviewid() {
+        return CUSTOMER_REVIEWID;
+    }
+
+    public static void setCustomerReviewid(String customerReviewid) {
+        CUSTOMER_REVIEWID = customerReviewid;
     }
 }

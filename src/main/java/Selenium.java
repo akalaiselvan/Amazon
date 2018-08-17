@@ -25,22 +25,21 @@ public class Selenium {
     }
 
     /*First it will select the mentioned category
-     * Then types the item name which need to be searhed
+     * Then type the item name which need to be searhed
      * Clicks search button
      * */
 
     @Test(priority = 1)
     public void searchItem() throws InterruptedException {
         TestServices.waitinSeconds(05);
-        //WebElement searchDropdownBox = TestServices.findElementbyCSSselector("#searchDropdownBox");
         WebElement searchDropdownBox = TestServices.findElementbyCSSselector(TestUtils.getGetDropdownPath());
-        Select dropdown = new Select(searchDropdownBox);
+        Select dropdown = new Select(searchDropdownBox);    // Select category from dropdown
         dropdown.selectByVisibleText(TestUtils.getCATEGORY_TOSEARCH());
         TestServices.waitinSeconds(2);
         WebElement searchbox = TestServices.findElementbyCSSselector(TestUtils.getTextboxId());
-        searchbox.sendKeys(TestUtils.getItemTosearch());
+        searchbox.sendKeys(TestUtils.getItemTosearch());    // type the item name in search box
         WebElement searchText = TestServices.findElementbyCSSselector(TestUtils.getSearchItem());
-        searchText.click();
+        searchText.click();                                 // clicks search icon
     }
 
     /*This method returns the searched item results as list */
@@ -54,7 +53,7 @@ public class Selenium {
         for (WebElement webElement : getResultList) {
             searchResults.add(webElement.getAttribute(TestUtils.getAttributeId()));  /*adding found id's in a list*/
         }
-        return searchResults;
+        return searchResults;  // Id's added in a List
     }
 
     /*To click the desired search result
@@ -65,8 +64,8 @@ public class Selenium {
 
         WebElement searchResult = TestServices.findElementbyCSSselector("#" + getResultsinList().get(Integer.parseInt(TestUtils.resultToShow())));
         WebElement getAnchorTag = searchResult.findElement(By.tagName(TestUtils.getTagA()));
-        String resultLink = getAnchorTag.getAttribute(TestUtils.getAttributeTitle());
-        searchResult.findElement(By.linkText(resultLink)).click();/*Clicks the required result*/
+        String resultLink = getAnchorTag.getAttribute(TestUtils.getAttributeTitle());  //gets the link from Anchor tag
+        searchResult.findElement(By.linkText(resultLink)).click();/*Clicks the required result link*/
     }
 
     /*To get clicked clicked result's Title and Edition if it is there*/
@@ -83,7 +82,7 @@ public class Selenium {
             try {
                 getTitle = TestServices.findElementbyCSSselector("#"+getResultTitles.get(spancount));
                 String result = getTitle.getText();
-                TestServices.writeToResultFile(result);
+                TestServices.writeToResultFile(result);  // Writes the title to text file
             } catch (Exception e) {
                 TestServices.writeToResultFile(getResultTitles.get(spancount));
             }
@@ -98,15 +97,15 @@ public class Selenium {
             throw new SkipException("Author name in only for Book category");
         }
         List<String> getAuthor = new ArrayList<String>();
-        WebElement getTitles = TestServices.findElementbyCSSselector(TestUtils.getAuthorTitle());
-        List<WebElement> getSpan = getTitles.findElements(By.tagName(TestUtils.getTagA()));
-        for (WebElement webElement : getSpan) {
+        WebElement getTitles = TestServices.findElementbyCSSselector(TestUtils.getAuthorTitle()); // find the title using css selector
+        List<WebElement> getSpan = getTitles.findElements(By.tagName(TestUtils.getTagA()));       // getting all span under the title as list
+        for (WebElement webElement : getSpan) {                                                   // getting texts from each span in list
             String s = webElement.getText();
             if (!s.equals("")) {
                 getAuthor.add(s);
             }
         }
-        TestServices.writeToResultFile("Author name : "+getAuthor);
+        TestServices.writeToResultFile("Author name : "+getAuthor);  //Writes author name to file
     }
 
     /*To fetch the Price of the book which is selected
@@ -122,7 +121,6 @@ public class Selenium {
         /*For few books the price list found to be different, so handled both types which i came through
          * and if it not comes under both types , it will return "No EditionWise Price Found" statement  */
 
-
         WebElement getEdition;
         try {
             getEdition = TestServices.findElementbyCSSselector(TestUtils.getEditionPrice());
@@ -131,7 +129,7 @@ public class Selenium {
             int n = 1;
             for (WebElement webElement : liTaginList) {
                 if (n <= count - 2) {
-                    WebElement edition = TestServices.findElementbyCSSselector("#" + webElement.getAttribute("id"));
+                    WebElement edition = TestServices.findElementbyCSSselector("#" + webElement.getAttribute(TestUtils.getAttributeId()));
                     TestServices.writeToResultFile("Edition : "+edition.getText());
                     n++;
                 }
@@ -158,8 +156,8 @@ public class Selenium {
     public void getAvgCustomerReview() throws FileNotFoundException {
         WebElement getReview;
         try {
-            getReview = TestServices.findElementbyCSSselector("#acrPopover");
-            String avgReviews = getReview.getAttribute(TestUtils.getAttributeTitle());
+            getReview = TestServices.findElementbyCSSselector(TestUtils.getCustomerReviewid()); // get customer review id using css selector
+            String avgReviews = getReview.getAttribute(TestUtils.getAttributeTitle());          // getting the review as title from getReview Id
             TestServices.writeToResultFile("Average customer reviews : "+avgReviews);
 
         } catch (Exception e) {

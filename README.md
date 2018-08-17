@@ -23,6 +23,11 @@ It will run by default in Firefox.
     for a particular item only.In this column give which result you need to read.
     
             Example : You need 1st result , give 1 or you want to read 3rd result simply give 3.
+            
+ # To run test 
+ 
+ * Run TestNG.xml file in Amazon/src/ after test completed export it in .html formats
+
  
  # Test Result and fetched data
  

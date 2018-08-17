@@ -1,149 +1,172 @@
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
 import jxl.read.biff.BiffException;
 import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.Select;
-import org.testng.Assert;
-import org.testng.annotations.AfterTest;
+import org.testng.SkipException;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class Selenium {
     public static String PAGE_TITLE;
-    public String Warning_Message;
-    public static String EXPECTED_ALERT_MESSAGE="User or Password is not valid";
-    TestUtils utils=new TestUtils();
 
     public Selenium() throws IOException, BiffException {
     }
 
 
-//    @Test
-//public void validateLogin() throws InterruptedException, IOException, BiffException {
-//                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                String up[][]=TestHelper.getfromExcel(utils.SHEET_LOCATIO,utils.sheetname); //get input data from excel sheet
-//        for (int i=0;i<up.length;i++){
-//            String username=up[i][0];
-//            String password=up[i][1];
-//            //login(username,password);
-//        }
-//
-//    }
-
-
-    //@BeforeTest
+    /*To lead browser into desired link , Which can be updated in credentials sheet of TestSheet*/
+    @BeforeTest
     public void gotoLink() throws InterruptedException {
         TestServices.getThisLink(TestUtils.getSITELINK());
         TestServices.waitinSeconds(2);
     }
 
-    //@Test(priority = 1)
+    /*First it will select the mentioned category
+     * Then types the item name which need to be searhed
+     * Clicks search button
+     * */
+
+    @Test(priority = 1)
     public void searchItem() throws InterruptedException {
-        WebElement searchDropdownBox=TestServices.findElementbyCSSselector(TestUtils.getGetDropdownPath());
-        Select dropdown=new Select(searchDropdownBox);
+        TestServices.waitinSeconds(05);
+        //WebElement searchDropdownBox = TestServices.findElementbyCSSselector("#searchDropdownBox");
+        WebElement searchDropdownBox = TestServices.findElementbyCSSselector(TestUtils.getGetDropdownPath());
+        Select dropdown = new Select(searchDropdownBox);
         dropdown.selectByVisibleText(TestUtils.getCATEGORY_TOSEARCH());
         TestServices.waitinSeconds(2);
-        WebElement searchbox=TestServices.findElementbyCSSselector(TestUtils.getTextboxId());
+        WebElement searchbox = TestServices.findElementbyCSSselector(TestUtils.getTextboxId());
         searchbox.sendKeys(TestUtils.getItemTosearch());
-        WebElement searchText=TestServices.findElementbyCSSselector(TestUtils.getSearchItem());
+        WebElement searchText = TestServices.findElementbyCSSselector(TestUtils.getSearchItem());
         searchText.click();
     }
 
-    //@Test(priority = 2)
+    /*This method returns the searched item results as list */
+
+    @Test(priority = 2)
     public List<String> getResultsinList() throws InterruptedException {
-        List<String> gettit=new ArrayList<String>();
-        TestServices.waitinSeconds(10);
-        WebElement parent=TestServices.findElementbyId("atfResults");
-        List<WebElement> child=parent.findElements(By.tagName("li"));
-        for (WebElement webElement:child){
-            gettit.add(webElement.getAttribute("id"));
+        List<String> searchResults = new ArrayList<String>();
+        TestServices.waitinSeconds(5);  // Hard coded wait statement to view the results
+        WebElement getResultId = TestServices.findElementbyCSSselector(TestUtils.getGetresultId());
+        List<WebElement> getResultList = getResultId.findElements(By.tagName(TestUtils.getTagLi()));
+        for (WebElement webElement : getResultList) {
+            searchResults.add(webElement.getAttribute(TestUtils.getAttributeId()));  /*adding found id's in a list*/
         }
-    return gettit;
+        return searchResults;
     }
 
-    //@Test(priority = 3)
+    /*To click the desired search result
+     * nth row,which need to click will be read from TestSheet's Credentials */
+    @Test(priority = 3)
     public void getIntoResult() throws InterruptedException, IOException {
-        WebElement getres=TestServices.findElementbyCSSselector("#"+getResultsinList().get(Integer.parseInt(TestUtils.resultToShow())));
-        WebElement tagname=getres.findElement(By.tagName("a"));
-        String url=tagname.getAttribute("title");
-        getres.findElement(By.linkText(url)).click();
+        /*Gets the nth results which need to select from TestSheeet and appended that with the searched result's id*/
+
+        WebElement searchResult = TestServices.findElementbyCSSselector("#" + getResultsinList().get(Integer.parseInt(TestUtils.resultToShow())));
+        WebElement getAnchorTag = searchResult.findElement(By.tagName(TestUtils.getTagA()));
+        String resultLink = getAnchorTag.getAttribute(TestUtils.getAttributeTitle());
+        searchResult.findElement(By.linkText(resultLink)).click();/*Clicks the required result*/
     }
 
-
-    //@Test(priority = 4)
-    public void getTitleandEdition() {
-        List<String> getTitle = new ArrayList<String>();
-        WebElement getTitles = TestServices.findElementbyCSSselector("#title");
-        List<WebElement> fetres = getTitles.findElements(By.tagName("span"));
-        int n = 0;
-        for (WebElement webElement : fetres) {
-            getTitle.add(webElement.getAttribute("id"));
-            WebElement s; try {
-                s = TestServices.findElementbyCSSselector("#" + getTitle.get(n));
-                String text = s.getText();
-                System.out.println(text);
+    /*To get clicked clicked result's Title and Edition if it is there*/
+    @Test(priority = 4)
+    public void getTitleandEdition() throws FileNotFoundException {
+        List<String> getResultTitles = new ArrayList<String>();
+        WebElement searchResultTitle = TestServices.findElementbyCSSselector(TestUtils.getSearchresultTitle());
+        /*Getting span tag found in the result's titile in a list*/
+        List<WebElement> spanTagsinTitleList = searchResultTitle.findElements(By.tagName(TestUtils.getTagSpan()));
+        int spancount = 0;
+        for (WebElement webElement : spanTagsinTitleList) {
+            getResultTitles.add(webElement.getAttribute(TestUtils.getAttributeId()));
+            WebElement getTitle;
+            try {
+                getTitle = TestServices.findElementbyCSSselector("#"+getResultTitles.get(spancount));
+                String result = getTitle.getText();
+                TestServices.writeToResultFile(result);
             } catch (Exception e) {
-                e.printStackTrace();
+                TestServices.writeToResultFile(getResultTitles.get(spancount));
             }
-            n++;
+            spancount++;
         }
     }
-    @Test
-    public void getAuthorName(){
-        TestServices.getThisLink("https://www.amazon.com/catalog-science-applications-flight-missions/dp/1722981881/ref=sr_1_2?s=books&ie=UTF8&qid=1534392831&sr=1-2&keywords=data+catalog&dpID=41PFrwqJ7pL&preST=_SX218_BO1,204,203,200_QL40_&dpSrc=srch");
-        List<String> getAuthor=new ArrayList<String>();
-        WebElement getTitles = TestServices.findElementbyCSSselector("#bylineInfo");
-        List<WebElement> getSpan = getTitles.findElements(By.tagName("a"));
+
+    /*To Read the Author Name of selected Book*/
+    @Test(priority = 5)
+    public void getAuthorName() throws FileNotFoundException {
+        if (!TestUtils.getCATEGORY_TOSEARCH().equals("Books")){
+            throw new SkipException("Author name in only for Book category");
+        }
+        List<String> getAuthor = new ArrayList<String>();
+        WebElement getTitles = TestServices.findElementbyCSSselector(TestUtils.getAuthorTitle());
+        List<WebElement> getSpan = getTitles.findElements(By.tagName(TestUtils.getTagA()));
         for (WebElement webElement : getSpan) {
-              String s = webElement.getText();
-              if (!s.equals("")){
-                  getAuthor.add(s);
-              }
+            String s = webElement.getText();
+            if (!s.equals("")) {
+                getAuthor.add(s);
+            }
         }
-        System.out.println(getAuthor);
-    }
-//    span.author:nth-child(1)
-//    span.author:nth-child(2)
-//    span.author:nth-child(3)
-
-
-
-
-    //@AfterTest
-    public void closeDriver(){
-        closedriver();
+        TestServices.writeToResultFile("Author name : "+getAuthor);
     }
 
+    /*To fetch the Price of the book which is selected
+     * After selecting the results only it will read these details*/
+
+    @Test(priority = 6)
+    public void getEditionwisePrice() throws FileNotFoundException {
+
+        if (!TestUtils.getCATEGORY_TOSEARCH().equals("Books")){
+            throw new SkipException("Edition price fetching is only for Book category");
+        }
+
+        /*For few books the price list found to be different, so handled both types which i came through
+         * and if it not comes under both types , it will return "No EditionWise Price Found" statement  */
 
 
+        WebElement getEdition;
+        try {
+            getEdition = TestServices.findElementbyCSSselector(TestUtils.getEditionPrice());
+            List<WebElement> liTaginList = getEdition.findElements(By.tagName(TestUtils.getTagLi()));
+            int count = liTaginList.size();
+            int n = 1;
+            for (WebElement webElement : liTaginList) {
+                if (n <= count - 2) {
+                    WebElement edition = TestServices.findElementbyCSSselector("#" + webElement.getAttribute("id"));
+                    TestServices.writeToResultFile("Edition : "+edition.getText());
+                    n++;
+                }
+            }
+        } catch (Exception e) {  /*Handled second method in exception*/
+            WebElement getEditionviaClass;
+            try {
+                getEditionviaClass = TestServices.findElementbyCSSselector(TestUtils.getEditionPriceMethod2());
+                List<WebElement> liTaginList = getEditionviaClass.findElements(By.tagName(TestUtils.getTagLi()));
+                for (WebElement webElement : liTaginList) {
+                    TestServices.writeToResultFile("Edition : "+webElement.getText());
+                }
+            } catch (Exception e1) {
+                TestServices.writeToResultFile("No Editionwise Price Found");
+            }
+        }
 
-
-    //"CSS: a[id^='result_']"
-    public void closedriver(){
-    TestServices.driver.close();
     }
 
 
+    /*This will read the average customer reviews for the selected item*/
 
-    public String getPAGE_TITLE() {
-        return PAGE_TITLE;
+    @Test(priority = 7)
+    public void getAvgCustomerReview() throws FileNotFoundException {
+        WebElement getReview;
+        try {
+            getReview = TestServices.findElementbyCSSselector("#acrPopover");
+            String avgReviews = getReview.getAttribute(TestUtils.getAttributeTitle());
+            TestServices.writeToResultFile("Average customer reviews : "+avgReviews);
+
+        } catch (Exception e) {
+            TestServices.writeToResultFile("No Average Reviews Found");
+        }
     }
 
-    public void setPAGE_TITLE(String PAGE_TITLE) {
-        this.PAGE_TITLE = PAGE_TITLE;
-    }
+
 }
 

@@ -38,6 +38,27 @@ public class TestUtils {
     private static String SEARCH_ITEM=TESTFEED.getCell(1,4).getContents();
     private static String RESULT="";
     private static String RESULT_TOSHOW="";
+    private static String RESULT_TXTFILENAME=CATEGORY_TOSEARCH+" : "+ITEM_TOSEARCH;
+
+    private static String GETRESULT_ID="#atfResults";
+    private static String TAG_LI="li";
+    private static String ATTRIBUTE_ID="id";
+    private static String TAG_A="a";
+    private static String TAG_SPAN="span";
+    private static String ATTRIBUTE_TITLE="title";
+    private static String SEARCHRESULT_TITLE="#title";
+    private static String AUTHOR_TITLE="#bylineInfo";
+    private static String EDITION_PRICE="#mediaTabs_tabSet";
+    private static String EDITION_PRICE_METHOD2="#tmmSwatches";
+
+
+
+
+
+
+
+
+
     public static String getPickNthresult() {
         return PICK_NTHRESULT;
     }
@@ -160,5 +181,86 @@ public class TestUtils {
 
     public static void setSITELINK(String SITELINK) {
         TestUtils.SITELINK = SITELINK;
+    }
+
+    public static String getResultTxtfilename() {
+        return RESULT_TXTFILENAME;
+    }
+
+    public static String getGetresultId() {
+        return GETRESULT_ID;
+    }
+
+
+    public static String getAttributeId() {
+        return ATTRIBUTE_ID;
+    }
+
+    public static void setAttributeId(String attributeId) {
+        ATTRIBUTE_ID = attributeId;
+    }
+
+    public static String getTagLi() {
+        return TAG_LI;
+    }
+
+    public static void setTagLi(String tagLi) {
+        TAG_LI = tagLi;
+    }
+
+    public static String getTagA() {
+        return TAG_A;
+    }
+
+    public static void setTagA(String tagA) {
+        TAG_A = tagA;
+    }
+
+    public static String getAttributeTitle() {
+        return ATTRIBUTE_TITLE;
+    }
+
+    public static void setAttributeTitle(String attributeTitle) {
+        ATTRIBUTE_TITLE = attributeTitle;
+    }
+
+    public static String getSearchresultTitle() {
+        return SEARCHRESULT_TITLE;
+    }
+
+    public static void setSearchresultTitle(String searchresultTitle) {
+        SEARCHRESULT_TITLE = searchresultTitle;
+    }
+
+    public static String getTagSpan() {
+        return TAG_SPAN;
+    }
+
+    public static void setTagSpan(String tagSpan) {
+        TAG_SPAN = tagSpan;
+    }
+
+    public static String getAuthorTitle() {
+        return AUTHOR_TITLE;
+    }
+
+    public static void setAuthorTitle(String authorTitle) {
+        AUTHOR_TITLE = authorTitle;
+    }
+
+    public static String getEditionPrice() {
+        return EDITION_PRICE;
+    }
+
+    public static void setEditionPrice(String editionPrice) {
+        EDITION_PRICE = editionPrice;
+    }
+
+    public static String getEditionPriceMethod2() {
+        return EDITION_PRICE_METHOD2;
+    }
+
+    public static void setEditionPriceMethod2(String editionPriceMethod2) {
+        EDITION_PRICE_METHOD2 = editionPriceMethod2;
     }
 }

@@ -6,13 +6,15 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
-import java.io.IOException;
+import java.io.*;
+import java.util.List;
 
 public class TestServices {
     static WebDriver driver;
 
-    TestUtils utils=new TestUtils();
+    TestUtils utils = new TestUtils();
 
     public TestServices() throws IOException, BiffException {
     }
@@ -41,9 +43,10 @@ public class TestServices {
         WebElement webElement = driver.findElement(Id);
         return webElement;
     }
-    public String findElementbyTagname(String tagname){
+
+    public String findElementbyTagname(String tagname) {
         By findtagname = By.tagName(tagname);
-        String finddtag= driver.findElement(findtagname).getText();
+        String finddtag = driver.findElement(findtagname).getText();
         return finddtag;
     }
 
@@ -61,18 +64,14 @@ public class TestServices {
 
     public static void waitinSeconds(int secondsToWait) throws InterruptedException {
         // driver.manage().timeouts().implicitlyWait(secondsToWait, TimeUnit.SECONDS);
-        secondsToWait=secondsToWait*1000;
+        secondsToWait = secondsToWait * 1000;
         Thread.sleep(secondsToWait);
     }
 
 
     public static void getThisLink(String URL) {
         System.setProperty(TestUtils.getWebdriverGecko(), TestUtils.getGeckodriverPath());
-        FirefoxProfile profile=new FirefoxProfile();
-        profile.setAcceptUntrustedCertificates(true);
-        DesiredCapabilities capabilities=new DesiredCapabilities();
-        capabilities.setCapability(FirefoxDriver.PROFILE,profile);
-        driver = new FirefoxDriver(capabilities);
+        driver = new FirefoxDriver();
         try {
             driver.get(URL);
         } catch (Exception e) {
@@ -81,12 +80,40 @@ public class TestServices {
 
     }
 
-    public void gettet() throws IOException, BiffException {
-        String up[][]=TestHelper.getfromExcel(utils.SHEET_LOCATIO,utils.sheetname);
-        for (int i=0;i<up.length;i++){
-            String username=up[i][0];
-            String password=up[i][1];
-            System.out.println("USername : "+username+" password : "+password);
+
+    public static void writeToResultFile(String str) throws FileNotFoundException,NullPointerException {
+        try {
+            File resultLog = new File(TestUtils.getResultTxtfilename());
+            if(!resultLog.exists()){
+                resultLog.createNewFile();
+            }
+            FileWriter fw = new FileWriter(resultLog,true);
+            BufferedWriter writer=new BufferedWriter(fw);
+            writer.newLine();
+            writer.write(str);
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
+
+
+
+
+
+
+    public void closedriver() {
+        driver.close();
+    }
+
+    public void gettet() throws IOException, BiffException {
+        String up[][] = TestHelper.getfromExcel(utils.SHEET_LOCATIO, utils.sheetname);
+        for (int i = 0; i < up.length; i++) {
+            String username = up[i][0];
+            String password = up[i][1];
+            System.out.println("USername : " + username + " password : " + password);
+        }
+    }
+
+
 }

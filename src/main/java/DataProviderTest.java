@@ -29,9 +29,6 @@ public class DataProviderTest {
     public void verifytext(){
     }
 
-    public void closedriver(){
-        selenium.closedriver();
-    }
 
 
 

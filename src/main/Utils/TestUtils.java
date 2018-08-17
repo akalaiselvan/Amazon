@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 
+@Test
 public class TestUtils {
     static Workbook workbook;
 
@@ -25,7 +26,7 @@ public class TestUtils {
     private static String PICK_NTHRESULT;
     private static String PICK_RESULTS;
     private static String WEBDRIVER_GECKO = "webdriver.gecko.driver";
-    private static String geckodriverPath = "/home/dell/Documents/INVEST/geckodriver";
+    private static String geckodriverPath = TESTFEED.getCell(4,1).getContents();;
     public String SHEET_LOCATIO="/home/dell/Documents/seltest.xls";
     public static String sheetname="gtest";
 
@@ -38,7 +39,7 @@ public class TestUtils {
     private static String SEARCH_ITEM=TESTFEED.getCell(1,4).getContents();
     private static String RESULT="";
     private static String RESULT_TOSHOW="";
-    private static String RESULT_TXTFILENAME=CATEGORY_TOSEARCH+" : "+ITEM_TOSEARCH;
+    private static String RESULT_TXTFILENAME=CATEGORY_TOSEARCH+"_"+ITEM_TOSEARCH;
 
     private static String GETRESULT_ID="#atfResults";
     private static String TAG_LI="li";

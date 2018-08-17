@@ -10,6 +10,7 @@ It will run by default in Firefox.
 
 * Find TestSheet.xls in repository , it is the heart for this automation.
 * In that excel 'Credentials' sheet is the place where we need to give our inputs
+* Empty fields have been validated using HardAssert.
 
 ### Category to search (Search category from LOV)
 *   In this column select the category under which you need to search the item.

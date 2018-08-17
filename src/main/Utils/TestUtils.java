@@ -6,13 +6,12 @@ import org.testng.annotations.Test;
 import java.io.File;
 import java.io.IOException;
 
-@Test
 public class TestUtils {
     static Workbook workbook;
 
     static {
         try {
-            workbook = Workbook.getWorkbook(new File("/home/dell/Documents/INVEST/FetchSearchResults/TestSheet.xls"));
+            workbook = Workbook.getWorkbook(new File("D:\\DON'T DELETE\\Amz\\TestSheet.xls"));
         } catch (IOException e) {
             e.printStackTrace();
         } catch (BiffException e) {
@@ -40,21 +39,19 @@ public class TestUtils {
     private static String RESULT="";
     private static String RESULT_TOSHOW="";
     private static String RESULT_TXTFILENAME=CATEGORY_TOSEARCH+"_"+ITEM_TOSEARCH;
+    
 
-    private static String GETRESULT_ID="#atfResults";
-    private static String TAG_LI="li";
-    private static String ATTRIBUTE_ID="id";
-    private static String TAG_A="a";
-    private static String TAG_SPAN="span";
-    private static String ATTRIBUTE_TITLE="title";
-    private static String SEARCHRESULT_TITLE="#title";
-    private static String AUTHOR_TITLE="#bylineInfo";
-    private static String EDITION_PRICE="#mediaTabs_tabSet";
-    private static String EDITION_PRICE_METHOD2="#tmmSwatches";
-
-    private static String CUSTOMER_REVIEWID="#acrPopover";
-
-
+    private static String GETRESULT_ID=TESTFEED.getCell(1,5).getContents();
+    private static String TAG_LI=TESTFEED.getCell(3,6).getContents();
+    private static String ATTRIBUTE_ID=TESTFEED.getCell(3,7).getContents();
+    private static String TAG_A=TESTFEED.getCell(3,8).getContents();
+    private static String TAG_SPAN=TESTFEED.getCell(3,9).getContents();
+    private static String ATTRIBUTE_TITLE=TESTFEED.getCell(3,10).getContents();
+    private static String SEARCHRESULT_TITLE=TESTFEED.getCell(3,11).getContents();
+    private static String AUTHOR_TITLE=TESTFEED.getCell(3,12).getContents();
+    private static String EDITION_PRICE=TESTFEED.getCell(3,13).getContents();
+    private static String EDITION_PRICE_METHOD2=TESTFEED.getCell(3,14).getContents();
+    private static String CUSTOMER_REVIEWID=TESTFEED.getCell(3,15).getContents();
 
 
 

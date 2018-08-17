@@ -12,7 +12,7 @@ It will run by default in Firefox.
 * In that excel 'Credentials' sheet is the place where we need to give our inputs
 * Empty fields have been validated using HardAssert.
 
-### Category to search (Search category from LOV)
+### Category to search (Select category from LOV)
 *   In this column select the category under which you need to search the item.
 
 ### Item to search 

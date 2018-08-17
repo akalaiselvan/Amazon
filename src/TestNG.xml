@@ -1,0 +1,5 @@
+<suite name="Amazon Data Fetch" >
+    <test name="Search Item" >
+    <classes><class name="Selenium"/></classes>
+    </test>
+    </suite>

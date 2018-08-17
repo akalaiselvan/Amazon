@@ -32,3 +32,6 @@ It will run by default in Firefox.
      
     For Example if you have searched Shirt item in Men category , the text file 
     would be in the name of 'Men_Shirt'
+    
+    If you select Book as category , you will get the result's Title , edition , Author , 
+    Price Details and Average Customer reviews

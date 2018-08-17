@@ -12,16 +12,17 @@ It will run by default in Firefox.
 * In that excel 'Credentials' sheet is the place where we need to give our inputs
 
 ### Category to search (Search category from LOV)
-    In this column select the category under which you need to search the item.
+*   In this column select the category under which you need to search the item.
 
 ### Item to search 
-    Type the item name here which you need to search in Amazon.
+*   Type the item name here which you need to search in Amazon.
                   
 ### nth Result to Pick
-    After search Amazon will show a set of results. In that we are going to read details
+
+*   After search Amazon will show a set of results. In that we are going to read details
     for a particular item only.In this column give which result you need to read.
     
-                   Example : You need 1st result , give 1 or you want to read 3rd result simply give 3.
+            Example : You need 1st result , give 1 or you want to read 3rd result simply give 3.
  
  # Test Result and fetched data
  
@@ -30,8 +31,8 @@ It will run by default in Firefox.
  
  #### In the Library path you can find a text file with your searched category and item as name 
      
-    For Example if you have searched Shirt item in Men category , the text file 
-    would be in the name of 'Men_Shirt'
+ * For Example if you have searched Shirt item in Men category , the text file 
+   would be in the name of 'Men_Shirt'
     
-    If you select Book as category , you will get the result's Title , edition , Author , 
-    Price Details and Average Customer reviews
+ * If you select Book as category , you will get the result's Title , edition , Author , 
+   Price Details and Average Customer reviews
